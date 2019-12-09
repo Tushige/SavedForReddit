@@ -23,10 +23,10 @@ class SignIn extends React.Component {
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(function() {
-        return firebase.auth().signInWithEmailAndPassword(email, password);
+      .then(() => {
+        return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error(error);
       });
   }

@@ -9,15 +9,11 @@ function SecureRoute(props) {
     componentToRender = (
       <Route
         path={path}
-        render={() => {
-          return (
-            <Component />
-          );
-        }}
+        component={Component}
       />
     );
   } else {
-      console.log('unauthorized path')
+    console.log('unauthorized path')
     componentToRender = <Redirect to="/"></Redirect>;
   }
 

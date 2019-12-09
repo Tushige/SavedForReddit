@@ -10,8 +10,8 @@ import WithAuthListener from "./decorators/WithAuthListener";
 
 function App(props) {
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div className="App">
         <WithAuthListener>
           <Switch>
             <Route exact path="/" component={SignIn} />
@@ -19,8 +19,8 @@ function App(props) {
             <Route path="*" component={SignUp} />
           </Switch>
         </WithAuthListener>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
