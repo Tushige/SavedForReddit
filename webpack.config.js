@@ -43,8 +43,13 @@ module.exports = {
         use: [
           'file-loader',
         ],
-      }
+      },
+      { test: /\.json$/, loader: 'json-loader' }
     ],
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty'
   },
   devServer: {
     historyApiFallback: true,

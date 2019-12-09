@@ -9,7 +9,7 @@ function WithAuthListener({ children }) {
     // listen to auth status change
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        history.push("/dashboard");
+        history.push('/dashboard');
       } else {
         firebase.auth().signOut();
       }

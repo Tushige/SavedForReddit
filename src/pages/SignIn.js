@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "../utils/firebase";
+import {
+  REDDIT_CLIENT_ID,
+  REDDIT_CLIENT_SECRET,
+  REDDIT_REDIRECT_URI
+} from '../utils/consts'
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -24,7 +29,14 @@ class SignIn extends React.Component {
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+          .then(() => {
+            const response_type = 'code';
+            const state = '123reddit';
+            const duration = 'temporary';
+            const scope = 'read';
+            window.location.href = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=${response_type}&state=${state}&redirect_uri=${REDDIT_REDIRECT_URI}&duration=${duration}&scope=${scope}`
+          })
       })
       .catch(function (error) {
         console.error(error);
