@@ -26,30 +26,23 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
-      },
-      {
         test: /\.(png|svg|jpg|gif|gltf)$/,
         use: [
           'file-loader',
         ],
       },
       {
-        test: /\.mtl$/,
+        test: /\.s[ac]ss$/i,
         use: [
-          'file-loader',
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
         ],
       },
-      { test: /\.json$/, loader: 'json-loader' }
     ],
-  },
-  node: {
-    fs: 'empty',
-    net: 'empty'
   },
   devServer: {
     historyApiFallback: true,

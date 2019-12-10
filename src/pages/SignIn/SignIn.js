@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import firebase from "../utils/firebase";
+import firebase from "../../utils/firebase";
 import {
   REDDIT_CLIENT_ID,
   REDDIT_CLIENT_SECRET,
   REDDIT_REDIRECT_URI
-} from '../utils/consts'
+} from '../../utils/consts'
 
 class SignIn extends React.Component {
   constructor(props) {

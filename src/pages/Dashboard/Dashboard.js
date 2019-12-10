@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom';
-import firebase from '../utils/firebase';
-// import rp from 'request-promise'
-
+import firebase from '../../utils/firebase';
 import axios from 'axios';
+import './Dashboard.scss';
+
 import {
     generateRedditAccessToken,
     setRedditAccessToken,
     getUser,
     getSavedPosts
-} from '../utils/reddit_helper';
+} from '../../utils/reddit_helper';
 
 function Dashboard(props) {
 
@@ -32,19 +32,16 @@ function Dashboard(props) {
         try {
             (async function user() {
                 const posts = await getSavedPosts();
-                console.log('******POSTS')
-                console.log(posts)
             })()
         } catch (e) {
             console.error(e)
         }
     }
     return (
-        <>
-            <div>Dashboard</div>
+        <div className="dashboard">
             <button onClick={signOut}>Sign out</button>
             <button onClick={getMe}>getme</button>
-        </>
+        </div>
     )
 }
 

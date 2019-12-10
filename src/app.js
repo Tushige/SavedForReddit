@@ -3,10 +3,11 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import SecureRoute from "./components/SecureRoute";
-import Dashboard from "./pages/Dashboard";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import SignUp from "./pages/SignIn/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
 import WithAuthListener from "./decorators/WithAuthListener";
+import './app.scss';
 
 function App(props) {
   return (
