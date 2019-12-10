@@ -12,7 +12,8 @@ import {
 } from '../../utils/reddit_helper';
 
 function Dashboard(props) {
-
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true);
     function signOut() {
         firebase.auth().signOut().then(() => {
             console.log('sign out success!')
@@ -23,6 +24,11 @@ function Dashboard(props) {
         try {
             (async function user() {
                 await generateRedditAccessToken();
+                const user = await getUser();
+                if (user) {
+                    setUser(user.data);
+                    setLoading(false);
+                }
             })()
         } catch (e) {
             console.error(e)
@@ -37,10 +43,19 @@ function Dashboard(props) {
             console.error(e)
         }
     }
-    return (
+    return loading ? null : (
         <div className="dashboard">
             <button onClick={signOut}>Sign out</button>
-            <button onClick={getMe}>getme</button>
+            <div className="gutter" />
+            <div className="main-content">
+                <h1>
+                    Hi {user.name}
+                </h1>
+                <p className="welcome-text">Tidying orders and relaxes the mind</p>
+                <div className="search-box">
+                    insert search box here
+                </div>
+            </div>
         </div>
     )
 }
