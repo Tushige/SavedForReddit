@@ -2,6 +2,22 @@
     width: 100vw;
     height: 100vh;
     background-color: #f2f2f2;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "main-view work-view";
+    overflow: hidden;
+}
+
+.main-view {
+    grid-area: main-view;
+    max-height: 100vh;
+}
+
+.work-view {
+    grid-area: work-view;
+    height: 98vh;
+    align-self: center;
 }
 
 .gutter {
