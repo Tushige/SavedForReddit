@@ -4,7 +4,8 @@ import firebase from "../../utils/firebase";
 import {
   REDDIT_CLIENT_ID,
   REDDIT_CLIENT_SECRET,
-  REDDIT_REDIRECT_URI
+  REDDIT_REDIRECT_URI,
+  REDDIT_SCOPES
 } from '../../utils/consts'
 
 class SignIn extends React.Component {
@@ -34,7 +35,7 @@ class SignIn extends React.Component {
             const response_type = 'code';
             const state = '123reddit';
             const duration = 'temporary';
-            const scope = 'identity edit read privatemessages report  save submit subscribe vote history vote';
+            const scope = REDDIT_SCOPES;
             window.location.href = `https://www.reddit.com/api/v1/authorize?client_id=${REDDIT_CLIENT_ID}&response_type=${response_type}&state=${state}&redirect_uri=${REDDIT_REDIRECT_URI}&duration=${duration}&scope=${scope}`
           })
       })

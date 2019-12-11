@@ -12,6 +12,7 @@ import axios from 'axios';
  * gets access token from reddit 
  */
 export function generateRedditAccessToken() {
+  console.log('generating access token')
   return new Promise((resolve, reject) => {
     let code = localStorage.getItem('code');
     const form = new FormData();
@@ -29,6 +30,7 @@ export function generateRedditAccessToken() {
         return data;
       }]
     }).then(res => {
+
       if (res.data.access_token) {
         setRedditAccessToken(res.data.access_token);
       }
@@ -44,6 +46,7 @@ export function generateRedditAccessToken() {
  * saves the access token locally in our app
  */
 export function setRedditAccessToken(access_token) {
+  console.log('setting access token')
   localStorage.setItem('access_token', access_token);
 }
 /**
@@ -69,4 +72,7 @@ export function getUser() {
 }
 export function getSavedPosts() {
   return api.get(REDDIT_API_URL + '/user/IamNervS/saved');
+}
+export function getSubreddits() {
+  return api.get(REDDIT_API_URL + '/subreddits/mine/subscriber');
 }

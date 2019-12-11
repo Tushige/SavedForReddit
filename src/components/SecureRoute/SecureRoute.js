@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuthUser } from '../utils/auth';
+import { isAuthUser } from '../../utils/auth';
 
 function SecureRoute(props) {
   const { component: Component, path, location } = props;
@@ -13,6 +13,7 @@ function SecureRoute(props) {
   if (isAuthUser()) {
     componentToRender = (
       <Route
+        exact
         path={path}
         component={Component}
       />
