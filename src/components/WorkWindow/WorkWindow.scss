@@ -1,7 +1,13 @@
+@import "../../style/colors";
+// @use "color";
 .work-window {
     background-color: white;
     border-radius: 16px;
-    width: 100%;
+    width: 450px;
     height: 100%;
     padding: 15px;
+}
+
+.subreddit-description {
+    color: $gray;
 }

@@ -15,26 +15,23 @@ import {
     getSubreddits,
 } from '../../utils/reddit_helper';
 
-function Dashboard(props) {
+const Dashboard = React.memo((props) => {
     const [user, setUser] = useState(null);
+    const [selectedSubreddit, setSelectedSubreddit] = useState(null);
     const [subreddits, setSubreddits] = useState(null);
+    const [savedPosts, setSavedPosts] = useState(null);
     const [loading, setLoading] = useState(true);
+
     function signOut() {
         firebase.auth().signOut().then(() => {
             console.log('sign out success!')
         }).catch(e => console.error(e))
         props.history.push('/');
     }
+
     useEffect(() => {
         try {
-            const hasToken = getRedditToken();
-            console.log(`hasToken ${hasToken}`)
-            console.log(hasToken);
             (async function user() {
-                if (!hasToken || hasToken === 'undefined' || hasToken === 'null') {
-                    console.log('generating token')
-                    await generateRedditAccessToken();
-                }
                 const user = await getUser();
                 if (user) {
                     setUser(user.data);
@@ -44,11 +41,34 @@ function Dashboard(props) {
                     setSubreddits(subreddits_res.data.data.children.map(subreddit => subreddit.data));
                 }
                 setLoading(false);
+
+                const savedPosts = await getSavedPosts();
+                if (savedPosts.data) {
+                    setSavedPosts(savedPosts.data.data.children.map(post => post.data));
+                }
             })()
         } catch (e) {
             console.error(e)
         }
-    }, [])
+    }, []);
+
+    function subredditClickHandler(subreddit) {
+        setSelectedSubreddit(subreddit);
+    }
+    function renderWorkview() {
+        const posts = savedPosts.filter(post => {
+            return post.subreddit_id === selectedSubreddit.name
+        })
+        return (
+            <div className="work-view">
+                <WorkWindow selectedSubreddit={selectedSubreddit} posts={posts} />
+            </div>
+        )
+    }
+    const workView = selectedSubreddit ? renderWorkview() : null;
+
+    console.log('rendering dashboard')
+
     return loading ? null : (
         <div className="dashboard">
             <div className="main-view">
@@ -62,15 +82,12 @@ function Dashboard(props) {
                     <div className="search-box">
                         insert search box here
                 </div>
-
-                    <SubredditList subreddits={subreddits} />
+                    <SubredditList subreddits={subreddits} subredditClickHandler={subredditClickHandler} />
                 </div>
             </div>
-            <div className="work-view">
-                <WorkWindow />
-            </div>
+            {workView}
         </div>
     )
-}
+});
 
 export default Dashboard;
