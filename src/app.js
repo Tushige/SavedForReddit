@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from './utils/firebase';
 import SecureRoute from "./components/SecureRoute/SecureRoute";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import DashboardContainer from "./containers/DashboardContainer";
 import Portal from './pages/Portal/Portal';
 import SignUp from "./pages/SignIn/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
@@ -28,7 +28,7 @@ function App(props) {
         <Switch>
           <Route exact path="/" component={SignIn} />
           <SecureRoute path={"/portal"} component={Portal} />
-          <SecureRoute path={"/dashboard"} component={Dashboard} />
+          <SecureRoute path={"/dashboard"} component={DashboardContainer} />
           <SecureRoute path={'/signout'} component={Signout} />
           <Route path="*" component={SignUp} />
         </Switch>

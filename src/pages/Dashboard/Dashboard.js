@@ -4,7 +4,7 @@ import firebase from '../../utils/firebase';
 import axios from 'axios';
 import './Dashboard.scss';
 import SubredditList from '../../components/SubredditList/SubredditList';
-import WorkWindow from '../../components/WorkWindow/WorkWindow';
+import PostsTableContainer from '../../containers/PostsTableContainer';
 
 import {
     generateRedditAccessToken,
@@ -15,12 +15,10 @@ import {
     getSubreddits,
 } from '../../utils/reddit_helper';
 
-const Dashboard = React.memo((props) => {
-    const [user, setUser] = useState(null);
-    const [selectedSubreddit, setSelectedSubreddit] = useState(null);
-    const [subreddits, setSubreddits] = useState(null);
-    const [savedPosts, setSavedPosts] = useState(null);
-    const [loading, setLoading] = useState(true);
+const Dashboard = (props) => {
+    console.log("dashboarding rendering");
+    const { fetchUser, fetchSubreddits, selectSubreddit } = props
+    const { user, subreddits, selectedSubreddit, posts } = props;
 
     function signOut() {
         firebase.auth().signOut().then(() => {
@@ -32,20 +30,8 @@ const Dashboard = React.memo((props) => {
     useEffect(() => {
         try {
             (async function user() {
-                const user = await getUser();
-                if (user) {
-                    setUser(user.data);
-                }
-                const subreddits_res = await getSubreddits();
-                if (subreddits_res) {
-                    setSubreddits(subreddits_res.data.data.children.map(subreddit => subreddit.data));
-                }
-                setLoading(false);
-
-                const savedPosts = await getSavedPosts();
-                if (savedPosts.data) {
-                    setSavedPosts(savedPosts.data.data.children.map(post => post.data));
-                }
+                fetchUser();
+                fetchSubreddits();
             })()
         } catch (e) {
             console.error(e)
@@ -53,41 +39,36 @@ const Dashboard = React.memo((props) => {
     }, []);
 
     function subredditClickHandler(subreddit) {
-        setSelectedSubreddit(subreddit);
+        selectSubreddit(subreddit);
     }
     function renderWorkview() {
-        const posts = savedPosts.filter(post => {
-            return post.subreddit_id === selectedSubreddit.name
-        })
         return (
             <div className="work-view">
-                <WorkWindow selectedSubreddit={selectedSubreddit} posts={posts} />
+                <PostsTableContainer />
             </div>
         )
     }
     const workView = selectedSubreddit ? renderWorkview() : null;
 
-    console.log('rendering dashboard')
-
-    return loading ? null : (
+    return props.user.pending && props.subreddits.pending ? null : (
         <div className="dashboard">
             <div className="main-view">
                 <button onClick={signOut}>Sign out</button>
                 <div className="gutter" />
                 <div className="main-content">
                     <h1>
-                        Hi {user.name}
+                        Hi {user.data.name}
                     </h1>
                     <p className="welcome-text">Tidying orders and relaxes the mind</p>
                     <div className="search-box">
                         insert search box here
                 </div>
-                    <SubredditList subreddits={subreddits} subredditClickHandler={subredditClickHandler} />
+                    <SubredditList subreddits={subreddits.data} subredditClickHandler={subredditClickHandler} />
                 </div>
             </div>
             {workView}
         </div>
     )
-});
+}
 
 export default Dashboard;

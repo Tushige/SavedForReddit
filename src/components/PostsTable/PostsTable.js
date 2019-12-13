@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuthUser } from '../../utils/auth';
-import './WorkWindow.scss';
+import './PostsTable.scss';
 import Axios from 'axios';
 
 function PostItem({ post }) {
@@ -13,10 +13,22 @@ function PostItem({ post }) {
   )
 }
 
-function WorkWindow({ selectedSubreddit, posts }) {
+function PostsTable(props) {
+  const { selectedSubreddit, posts } = props;
+  const { fetchSavedPosts } = props;
+  if (!selectedSubreddit) {
+    return null;
+  }
+  useEffect(() => {
+    fetchSavedPosts();
+  }, [])
+  if (posts.pending) {
+    return null;
+  }
+  console.log('[PostsTable] posts')
   console.log(posts)
   const { display_name, public_description } = selectedSubreddit;
-  const postItems = posts.map(post => {
+  const postItems = posts.data.map(post => {
     return <PostItem key={post.id} post={post} />
   })
   return (
@@ -28,4 +40,4 @@ function WorkWindow({ selectedSubreddit, posts }) {
   )
 }
 
-export default WorkWindow;
+export default PostsTable;
