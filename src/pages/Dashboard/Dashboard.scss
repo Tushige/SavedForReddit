@@ -1,51 +1,53 @@
 .dashboard {
-    width: 100vw;
-    height: 100vh;
-    background-color: #f2f2f2;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: "main-view work-view";
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f2f2f2;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "main-view work-view";
+  overflow: auto;
 }
 
 .main-view {
-    grid-area: main-view;
-    max-height: 100vh;
+  grid-area: main-view;
+  max-height: 100vh;
 }
-
+.main-content__header {
+  position: fixed;
+}
 .work-view {
-    grid-area: work-view;
-    height: 98vh;
-    align-self: center;
-    position: absolute;
-    right: 0;
+  grid-area: work-view;
+  height: 98vh;
+  align-self: center;
+  position: absolute;
+  right: 0;
 }
 
 .work-view.hidden {
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
 
 .gutter {
-    margin-top: 150px;
+  margin-top: 150px;
 }
 
 .main-content {
-    width: 750px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  width: 750px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 h1 {
-    font-size: 3rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-bottom: 20px;
+  font-size: 3rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin-bottom: 20px;
 }
 
 .welcome-text {
-    color: #727272;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-bottom: 20px;
+  color: #727272;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin-bottom: 20px;
 }

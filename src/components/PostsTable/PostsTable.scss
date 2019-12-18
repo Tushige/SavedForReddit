@@ -1,13 +1,16 @@
 @import "../../style/colors";
 // @use "color";
-.work-window {
-    background-color: white;
-    border-radius: 16px;
-    width: 450px;
-    height: 100%;
-    padding: 15px;
+.plans-table-window {
+  background-color: white;
+  border-radius: 16px;
+  width: 450px;
+  height: 100%;
+  padding: 15px;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
 .subreddit-description {
-    color: $gray;
+  color: $gray;
 }

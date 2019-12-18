@@ -1,30 +1,26 @@
-import { connect } from 'react-redux';
-import PostsTable from '../components/PostsTable/PostsTable';
-import {
-  fetchPostsPending,
-  fetchPostsSuccess,
-  fetchPostsError
-} from '../actions/postsTable';
+import { connect } from "react-redux";
+import PostsTable from "../components/PostsTable/PostsTable";
+import { fetchPostsPending, fetchPostsSuccess, fetchPostsError, closePostsWindow } from "../actions/postsTable";
 
-import {
-  getSavedPosts
-} from '../utils/reddit_helper';
+import { getSavedPosts } from "../utils/reddit_helper";
 
 const mapStateToProps = state => {
-  console.log('is posts pending')
-  console.log(state.posts.pending)
+  console.log("is posts pending");
+  console.log(state.posts.pending);
   return {
     posts: {
       ...state.posts,
-      data: !state.posts.pending ? state.posts.data.filter(post => {
-        return post.subreddit_id === state.selectedSubreddit.name
-      }) : state.posts.data
+      data: !state.posts.pending
+        ? state.posts.data.filter(post => {
+            return post.subreddit_id === state.selectedSubreddit.name;
+          })
+        : state.posts.data
     },
     selectedSubreddit: state.selectedSubreddit
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     async fetchSavedPosts() {
       dispatch(fetchPostsPending());
@@ -35,8 +31,11 @@ const mapDispatchToProps = (dispatch) => {
       } else {
         dispatch(fetchPostsError());
       }
+    },
+    closePostsWindow() {
+      dispatch(closePostsWindow());
     }
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsTable);
